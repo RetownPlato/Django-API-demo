@@ -1,0 +1,36 @@
+{
+  "name": "demo-project",
+  "version": "1.0.0",
+  "description": "```sequence Frontend->Django REST API:Send image Django Rest API->Baidu API:Send image Note left of Frontend:User login and send requests Baidu API->Django Rest API:Results Note right of Baidu API:Deal with images Django REST API->Frontend:Results Note left of Frontend:Render results ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development --watch ./demo/frontend/src/index.js --output ./demo/frontend/static/frontend/main.js",
+    "build": "webpack --mode production ./demo/frontend/src/index.js --output ./demo/frontend/static/frontend/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RetownPlato/Django-API-demo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RetownPlato/Django-API-demo/issues"
+  },
+  "homepage": "https://github.com/RetownPlato/Django-API-demo#readme",
+  "devDependencies": {
+    "@babel/core": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}

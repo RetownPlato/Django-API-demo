@@ -17,6 +17,7 @@ from django.urls import path, include
 from django.conf.urls import include
 
 urlpatterns = [
+    path('app/', include('frontend.urls')),
     path('', include('backend.urls')),
 ]
 urlpatterns += [
