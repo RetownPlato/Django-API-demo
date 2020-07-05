@@ -1,48 +1,44 @@
-from rest_framework import status
+from .models import Lead
+from .serializers import LeadSerializer, UserSerializer
+from .permissions import IsOwnerOrReadOnly
+from rest_framework import generics, permissions
+from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Lead
-from .serializers import LeadSerializer
-
-@api_view(['GET', 'POST'])
-def lead_list(request, format=None):
-    """
-    List all leads, or create a new lead.
-    """
-    if request.method == 'GET':
-        leads = Lead.objects.all()
-        serializer = LeadSerializer(leads, many=True)
-        return Response(serializer.data)
-
-    elif request.method == 'POST':
-        serializer = LeadSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+from rest_framework.reverse import reverse
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def lead_detail(request, pk, format=None):
-    """
-    Retrieve, update or delete a lead.
-    """
-    try:
-        lead = Lead.objects.get(pk=pk)
-    except Lead.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({
+        'users': reverse('user-list', request=request, format=format),
+        'leads': reverse('lead-list', request=request, format=format)
+    })
 
-    if request.method == 'GET':
-        serializer = LeadSerializer(lead)
-        return Response(serializer.data)
 
-    elif request.method == 'PUT':
-        serializer = LeadSerializer(lead, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    elif request.method == 'DELETE':
-        lead.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+
+class LeadList(generics.ListCreateAPIView):
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+    queryset = Lead.objects.all()
+    serializer_class = LeadSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class LeadDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Lead.objects.all()
+    serializer_class = LeadSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                      IsOwnerOrReadOnly]
