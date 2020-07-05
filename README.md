@@ -1,12 +1,10 @@
-`cd demo-project`
-`django-admin startproject demo .`
-`cd demo`
-Using the project's namespace avoids name clashes with external modules
-`django-admin startapp backend`
-Sync your database
-`python manage.py migrate`
-Create an initial user named admin with a password of password123.
-`python manage.py createsuperuser --email admin@example.com --username admin`
-`cd demo/backend` and create a file called serializers.py
-
+```sequence
+Frontend->Django REST API:Send image
+Django Rest API->Baidu API:Send image
+Note left of Frontend:User login and send requests
+Baidu API->Django Rest API:Results
+Note right of Baidu API:Deal with images
+Django REST API->Frontend:Results
+Note left of Frontend:Render results
+```
 

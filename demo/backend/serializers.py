@@ -1,20 +1,26 @@
 from rest_framework import serializers
-from .models import Lead
+from .models import Customer, Image
 from django.contrib.auth.models import User
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    leads = serializers.HyperlinkedRelatedField(many=True, view_name='lead-detail', read_only=True)
+    customers = serializers.HyperlinkedRelatedField(many=True, view_name='customer-detail', read_only=True)
 
     class Meta:
         model = User
-        fields = ['url', 'id', 'username', 'leads']
+        fields = ['url', 'id', 'username', 'customers']
 
 
-class LeadSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Lead
-        fields = ['url', 'id', 'email', 'message', 'owner']
-
+class CustomerSerializer(serializers.HyperlinkedModelSerializer):
+    images = serializers.HyperlinkedRelatedField(many=True, view_name='image-detail', read_only=True)
     owner = serializers.ReadOnlyField(source='owner.username')
+    class Meta:
+        model = Customer
+        fields = ['url', 'id', 'first_name', 'last_name', 'email', 'images', 'owner']
+
+class ImageSerializer(serializers.HyperlinkedModelSerializer):
+    customer = serializers.ReadOnlyField(source='customer.email')
+    class Meta:
+        model = Image
+        fields = ['url', 'id', 'image', 'message', 'customer']
 
 
