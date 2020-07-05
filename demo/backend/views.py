@@ -1,45 +1,48 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from .models import Lead
 from .serializers import LeadSerializer
 
-@csrf_exempt
-def lead_list(request):
+@api_view(['GET', 'POST'])
+def lead_list(request, format=None):
+    """
+    List all leads, or create a new lead.
+    """
     if request.method == 'GET':
         leads = Lead.objects.all()
         serializer = LeadSerializer(leads, many=True)
-        return JsonResponse(serializer.data, safe=False)
+        return Response(serializer.data)
 
     elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = LeadSerializer(data=data)
+        serializer = LeadSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@csrf_exempt
-def lead_detail(request, pk):
+@api_view(['GET', 'PUT', 'DELETE'])
+def lead_detail(request, pk, format=None):
+    """
+    Retrieve, update or delete a lead.
+    """
     try:
         lead = Lead.objects.get(pk=pk)
     except Lead.DoesNotExist:
-        return HttpResponse(status=404)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
         serializer = LeadSerializer(lead)
-        return JsonResponse(serializer.data)
+        return Response(serializer.data)
 
     elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer = LeadSerializer(lead, data=data)
+        serializer = LeadSerializer(lead, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
         lead.delete()
-        return HttpResponse(status=204)
+        return Response(status=status.HTTP_204_NO_CONTENT)
