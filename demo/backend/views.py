@@ -32,6 +32,9 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated,]
 
+    def get_object(self):
+        return self.request.user
+
 
 class CustomerViewSet(viewsets.ModelViewSet):
     """
@@ -80,3 +83,11 @@ class LoginView(generics.GenericAPIView):
             "token": AuthToken.objects.create(user)[1]
         })
 
+
+# User 
+class UserView(generics.RetrieveAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated,]
+
+    def get_object(self):
+        return self.request.user
