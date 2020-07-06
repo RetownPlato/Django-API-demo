@@ -7,4 +7,5 @@
 ## Quick usage
 1. `npm install`
 2. `npm run dev`
-3. `python manage.py runserver`
+4. `conda env create -f environment.yml`
+5. `python demo/manage.py runserver`
