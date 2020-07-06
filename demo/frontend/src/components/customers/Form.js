@@ -9,7 +9,7 @@ export class Form extends Component {
         first_name: '',
         last_name: '',
         email: '',
-      }
+    }
 
     static propTypes = {
         addCustomer: PropTypes.func.isRequired
@@ -21,6 +21,11 @@ export class Form extends Component {
         const { first_name, last_name, email } = this.state;
         const customer = { first_name, last_name, email };
         this.props.addCustomer(customer)
+        this.setState({
+            first_name: '',
+            last_name: '',
+            email: '',
+        });
     }
 
     render() {
@@ -45,6 +50,10 @@ export class Form extends Component {
                     <div className="form-group form-check">
                         <input type="checkbox" className="form-check-input" id="exampleCheck1" />
                         <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="exampleFormControlFile1">Example file input</label>
+                        <input type="file" className="form-control-file" id="exampleFormControlFile1" />
                     </div>
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </form>

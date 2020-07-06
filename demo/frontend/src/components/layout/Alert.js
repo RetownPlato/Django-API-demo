@@ -1,15 +1,41 @@
 import React, { Component, Fragment } from "react";
 import { withAlert } from 'react-alert';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 export class Alerts extends Component {
 
-    componentDidMount() {
-        this.props.alert.show("It Works");
+    static propTypes = {
+        error: PropTypes.object.isRequired,
+        // message: PropTypes.object.isRequired
+    };
+
+    componentDidUpdate(prevProps) {
+        const { error, alert, message } = this.props;
+        if (error != prevProps.error) {
+            if (error.msg.email) {
+                alert.error(`Email: ${error.msg.email.join()}`);
+            }
+        }
+
+        if (message !== prevProps.message) {
+            if (message.deleteCustomer) {
+                alert.success(message.deleteCustomer);
+            }
+            if (message.addCustomer) {
+                alert.success(message.addCustomer);
+            }
+        }
     }
 
     render() {
-        return <Fragment />
+        return <Fragment />;
     }
 }
 
-export default withAlert(Alerts);
+const mapStateToProps = (state) => ({
+    error: state.errors,
+    message: state.messages,
+});
+
+export default connect(mapStateToProps)(withAlert()(Alerts));
