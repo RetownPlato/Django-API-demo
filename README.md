@@ -1,3 +1,5 @@
+A web project demo which can be modified easily to any particular project.
+
 ## Frontend:
 - React
 - Redux
