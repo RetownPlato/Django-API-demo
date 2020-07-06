@@ -12,10 +12,10 @@ export class Form extends Component {
     }
 
     static propTypes = {
-        addCustomer: PropTypes.func.isRequired
+        addCustomer: PropTypes.func.isRequired,
     };
 
-    onChange = e => this.setState({ [e.target.name]: e.target.value })
+    onChange = e => this.setState({ [e.target.name]: e.target.value });
     onSubmit = e => {
         e.preventDefault();
         const { first_name, last_name, email } = this.state;
@@ -26,7 +26,7 @@ export class Form extends Component {
             last_name: '',
             email: '',
         });
-    }
+    };
 
     render() {
         const { first_name, last_name, email } = this.state;

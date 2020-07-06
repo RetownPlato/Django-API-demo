@@ -18,7 +18,7 @@ from django.conf.urls import include
 
 urlpatterns = [
     path('app/', include('frontend.urls')),
-    path('', include('backend.urls')),
+    path('api/', include('backend.urls')),
 ]
 urlpatterns += [
     path('api-auth/', include('rest_framework.urls')),

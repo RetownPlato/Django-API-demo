@@ -15,6 +15,7 @@ export class Customer extends Component {
         this.props.getCustomers();
     }
 
+
     render() {
         return (
 

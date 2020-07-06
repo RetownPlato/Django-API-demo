@@ -6,6 +6,22 @@ from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
+from knox.models import AuthToken
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
+
+
+# Register API
+class RegisterView(generics.GenericAPIView):
+  serializer_class = RegisterSerializer
+
+  def post(self, request, *args, **kwargs):
+    serializer = self.get_serializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    user = serializer.save()
+    return Response({
+      "user": UserSerializer(user, context=self.get_serializer_context()).data,
+      "token": AuthToken.objects.create(user)[1]
+    })
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
@@ -14,6 +30,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated,]
 
 
 class CustomerViewSet(viewsets.ModelViewSet):
@@ -25,6 +42,10 @@ class CustomerViewSet(viewsets.ModelViewSet):
     serializer_class = CustomerSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly]
+    
+    # only owner can see 
+    # def get_queryset(self):
+    #     return self.request.user.customers.all()
 
     def perform_create(self, serializer):
         """
@@ -45,4 +66,17 @@ class ImageViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         serializer.save(customer=self.request.customer)
+
+# Login API
+class LoginView(generics.GenericAPIView):
+    serializer_class = LoginSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data
+        return Response({
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": AuthToken.objects.create(user)[1]
+        })
 
