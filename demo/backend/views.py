@@ -32,8 +32,16 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated,]
 
-    def get_object(self):
-        return self.request.user
+
+class UserView(generics.RetrieveAPIView):
+  permission_classes = [
+    permissions.IsAuthenticated,
+  ]
+  serializer_class = UserSerializer
+
+  def get_object(self):
+    return self.request.user
+
 
 
 class CustomerViewSet(viewsets.ModelViewSet):
