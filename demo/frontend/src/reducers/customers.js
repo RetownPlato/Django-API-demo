@@ -16,7 +16,7 @@ export default function(state = initialState, action) {
                 ...state,
                 customers: state.customers.filter(customer => customer.id !== action.payload)
             };
-        case DELETE_CUSTOMER:
+        case ADD_CUSTOMER:
             return {
                 ...state,
                 customers: [...state.customers, action.payload]

@@ -53,10 +53,6 @@ class CustomerViewSet(viewsets.ModelViewSet):
     serializer_class = CustomerSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly]
-    
-    # only owner can see 
-    # def get_queryset(self):
-    #     return self.request.user.customers.all()
 
     def perform_create(self, serializer):
         """
