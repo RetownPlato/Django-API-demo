@@ -25,4 +25,5 @@ A web project demo which can be modified easily to any particular project.
 1. `npm install`
 2. `npm run dev`
 4. `conda env create -f environment.yml`
+5. `pip install -r requirements.txt`
 5. `python demo/manage.py runserver`

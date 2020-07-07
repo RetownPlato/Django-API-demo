@@ -3,41 +3,11 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - asgiref=3.2.7=py_0
-  - ca-certificates=2020.6.20=hecda079_0
-  - certifi=2020.6.20=py38h32f6830_0
-  - django=3.0.3=py_0
-  - django-filter=2.3.0=py_0
-  - djangorestframework=3.11.0=py_0
-  - freetype=2.10.2=h8da9a1a_0
-  - importlib-metadata=1.7.0=py38h32f6830_0
-  - jpeg=9d=h0b31af3_0
-  - libcxx=10.0.0=1
-  - libedit=3.1.20191231=haf1e3a3_0
-  - libffi=3.3=h0a44026_1
-  - libpng=1.6.37=hbbe82c9_1
-  - libtiff=4.1.0=h2ae36a8_6
-  - libwebp-base=1.1.0=h0b31af3_3
-  - lz4-c=1.9.2=h4a8c4bd_1
-  - markdown=3.2.2=py_0
-  - ncurses=6.2=h0a44026_1
-  - olefile=0.46=py_0
-  - openssl=1.1.1g=h0b31af3_0
-  - pillow=7.2.0=py38h83dc5e5_0
-  - pip=20.1.1=py38_1
-  - python=3.8.3=h26836e1_1
-  - python_abi=3.8=1_cp38
-  - pytz=2020.1=py_0
-  - readline=8.0=h1de35cc_0
-  - setuptools=47.3.1=py38_0
-  - sqlite=3.32.3=hffcf06c_0
-  - sqlparse=0.3.1=py_0
-  - tk=8.6.10=hb0a8c7a_0
-  - wheel=0.34.2=py38_0
-  - xz=5.2.5=h1de35cc_0
-  - zipp=3.1.0=py_0
-  - zlib=1.2.11=h1de35cc_3
-  - zstd=1.4.4=h4b3e974_3
-  - pip:
-    - markdown2==2.3.9
-
+  - python=3.8
+  - django
+  - djangorestframework
+  - markdown
+  - django-filter
+  - pillow
+  - psycopg2
+prefix: /opt/miniconda3/envs/django
