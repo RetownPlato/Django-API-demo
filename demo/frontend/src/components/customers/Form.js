@@ -9,6 +9,7 @@ export class Form extends Component {
         first_name: '',
         last_name: '',
         email: '',
+        // image: '',
     }
 
     static propTypes = {
@@ -25,13 +26,14 @@ export class Form extends Component {
             first_name: '',
             last_name: '',
             email: '',
+            // image: null
         });
     };
 
     render() {
         const { first_name, last_name, email } = this.state;
         return (
-            <div>
+            <div className="card card-body mt-4 mb-4">
                 <h2>Add Customer</h2>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
@@ -52,7 +54,7 @@ export class Form extends Component {
                         <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="exampleFormControlFile1">Example file input</label>
+                        <label htmlFor="exampleFormControlFile1">Upload image</label>
                         <input type="file" className="form-control-file" id="exampleFormControlFile1" />
                     </div>
                     <button type="submit" className="btn btn-primary">Submit</button>
