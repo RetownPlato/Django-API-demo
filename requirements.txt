@@ -5,7 +5,7 @@ cryptography==2.9.2
 Django==3.0.3
 django-filter @ file:///home/conda/feedstock_root/build_artifacts/django-filter_1591380509061/work
 django-rest-knox==4.1.0
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 importlib-metadata @ file:///Users/runner/miniforge3/conda-bld/importlib-metadata_1593211382425/work
 Markdown @ file:///home/conda/feedstock_root/build_artifacts/markdown_1589366472132/work
 olefile==0.46
